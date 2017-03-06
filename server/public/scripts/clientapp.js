@@ -42,7 +42,7 @@ $(document).ready(function () {
   function postTreat(treat) {
     $.ajax({
       method: 'POST',
-      url: '/treats',
+      url: '/treats/new',
       data: treat,
     })
     .done(function () {

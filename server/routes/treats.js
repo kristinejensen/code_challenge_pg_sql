@@ -30,4 +30,50 @@ router.get('/', function(req, res){
   });
 });//end of router.get
 
+router.post('/new', function(req, res){
+  var newTreat = req.body;
+  pool.connect(function(errorConnectingToDatabase, client, done){
+    if(errorConnectingToDatabase){
+      console.log('Error connecting to database: ', errorConnectingToDatabase);
+      res.sendStatus(500);
+    } else {
+      client.query('INSERT INTO treats (name, description, pic) VALUES ($1, $2, $3);',
+      [newTreat.name, newTreat.description, newTreat.url],
+      function(errorMakingQuery, result){
+        done();
+        if(errorMakingQuery){
+          console.log('Error making the database query: ', errorMakingQuery);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    }
+  });
+}); // end of router.post
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = router;
